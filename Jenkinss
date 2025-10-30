@@ -1,16 +1,19 @@
 pipeline {
     agent any
+
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-        IMAGE_NAME = 'jaginisaiteja/myapp' // Replace with your Docker Hub repo
+        IMAGE_NAME = 'jaginisaiteja/myapp'
         IMAGE_TAG = 'latest'
     }
+
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/Teja-web/Docker_CICD_Integration'
+                git branch: 'main', url: 'https://github.com/Teja-web/Docker_CICD_Integration.git'
             }
         }
+
         stage('Build Docker Image') {
             steps {
                 script {
@@ -18,6 +21,7 @@ pipeline {
                 }
             }
         }
+
         stage('Login to Docker Hub') {
             steps {
                 script {
@@ -25,6 +29,7 @@ pipeline {
                 }
             }
         }
+
         stage('Push to Docker Hub') {
             steps {
                 script {
@@ -32,6 +37,7 @@ pipeline {
                 }
             }
         }
+
         stage('Cleanup') {
             steps {
                 script {
